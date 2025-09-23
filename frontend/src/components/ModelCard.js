@@ -565,13 +565,6 @@ const ModelCard = ({ model, onInteract, animationDelay = 0 }) => {
           <span className="file-type">GLB</span>
         </div>
         
-        <button 
-          className="interact-btn"
-          onClick={handleInteractClick}
-        >
-          <span className="btn-text">Interact</span>
-          <div className="btn-glow"></div>
-        </button>
       </div>
     </div>
   );
