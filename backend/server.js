@@ -219,7 +219,12 @@ app.get('/health', (req, res) => {
   res.json({ status: 'OK', message: 'GLB Viewer Backend is running' });
 });
 
-// Serve frontend
+
+// Serve frontend build (React app) for all non-API/static routes
+app.use(express.static(path.join(__dirname, '..', 'frontend', 'build')));
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '..', 'frontend', 'build', 'index.html'));
+});
 
 // Start HTTP server
 const server = app.listen(PORT, () => {
