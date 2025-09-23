@@ -1,3 +1,8 @@
+// Serve frontend build (React app) for all non-API/static routes
+app.use(express.static(path.join(__dirname, '..', 'frontend', 'build')));
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '..', 'frontend', 'build', 'index.html'));
+});
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
