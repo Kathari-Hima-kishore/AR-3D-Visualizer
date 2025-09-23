@@ -1,0 +1,17 @@
+# Render Blueprint for Monorepo (frontend + backend)
+services:
+  - type: web
+    name: backend
+    env: node
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && node server.js
+    plan: free
+    envVars:
+      - key: NODE_ENV
+        value: production
+  - type: web
+    name: frontend
+    env: static
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/build
+    plan: free

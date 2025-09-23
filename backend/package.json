@@ -1,0 +1,32 @@
+{
+  "name": "glb-viewer-backend",
+  "version": "1.0.0",
+  "description": "Backend server for GLB file viewer",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "precompress-models": "node scripts/precompress-models.js"
+  },
+  "dependencies": {
+    "compression": "^1.8.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "multer": "^1.4.5-lts.1",
+    "path": "^0.12.7",
+    "portfinder": "^1.0.38",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [
+    "glb",
+    "3d",
+    "webxr",
+    "webgl"
+  ],
+  "author": "GLB Viewer",
+  "license": "MIT"
+}
