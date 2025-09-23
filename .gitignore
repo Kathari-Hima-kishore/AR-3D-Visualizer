@@ -3,7 +3,7 @@
 # Ignore logs
 *.log
 # Ignore build output
-frontend/build/
+# frontend/build/
 # Ignore environment files
 .env
 .env.*
