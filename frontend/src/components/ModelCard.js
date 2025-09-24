@@ -551,16 +551,20 @@ const ModelCard = ({ model, onInteract, animationDelay = 0 }) => {
             </div>
           )}
         </div>
-        {/* Interact button restored below the preview */}
+      </div>
+      <div className="card-content">
+        <h3 className="model-title">{model.id}</h3>
+        <div className="model-info">
+          <span className="file-size">{formatFileSize(model.size)}</span>
+          <span className="file-type">GLB</span>
+        </div>
+        {/* Interact button moved below the model preview, inside card-content */}
         <button
           className="interact-btn"
           onClick={handleInteractClick}
           style={{
-            position: 'absolute',
-            left: '50%',
-            bottom: '16px',
-            transform: 'translateX(-50%)',
-            zIndex: 2,
+            margin: '18px auto 0 auto',
+            display: 'block',
             padding: '10px 28px',
             fontSize: '1.1rem',
             borderRadius: '24px',
@@ -577,13 +581,6 @@ const ModelCard = ({ model, onInteract, animationDelay = 0 }) => {
         >
           Interact
         </button>
-      </div>
-      <div className="card-content">
-        <h3 className="model-title">{model.id}</h3>
-        <div className="model-info">
-          <span className="file-size">{formatFileSize(model.size)}</span>
-          <span className="file-type">GLB</span>
-        </div>
       </div>
     </div>
   );
