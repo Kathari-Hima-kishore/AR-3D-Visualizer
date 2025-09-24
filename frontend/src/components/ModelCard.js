@@ -481,7 +481,6 @@ const ModelCard = ({ model, onInteract, animationDelay = 0 }) => {
   
 
 
-  // adjustZoom removed (unused) to satisfy ESLint
 
   // Preview is non-interactive; wheel/zoom are disabled for the card.
   
@@ -502,7 +501,6 @@ const ModelCard = ({ model, onInteract, animationDelay = 0 }) => {
     }
   }
 
-  // websocketUrl removed (unused) to satisfy ESLint
 
   return (
     <div
@@ -512,13 +510,13 @@ const ModelCard = ({ model, onInteract, animationDelay = 0 }) => {
       onMouseLeave={() => handleCardHover(false)}
     >
       <div className="card-glow"></div>
-  <div className="model-preview" ref={previewRef}>
+      <div className="model-preview" ref={previewRef}>
         <model-viewer
           ref={modelViewerRef}
           src={`${backendUrl}/models/${encodeURIComponent(model.name)}`}
           alt={`3D model: ${model.name}`}
           loading="eager"
-          reveal="auto" // Ensure model is revealed automatically
+          reveal="auto"
           auto-rotate
           auto-rotate-delay="0"
           rotation-per-second="20deg"
@@ -537,18 +535,15 @@ const ModelCard = ({ model, onInteract, animationDelay = 0 }) => {
             width: '100%',
             height: previewHeight,
             backgroundColor: 'transparent',
-            // ensure 3D rendering preserves depth and doesn't get clipped by rounding/overflow
             transformStyle: 'preserve-3d'
           }}
           onLoad={() => {
-            // Only reveal model after fully loaded
             if (modelViewerRef.current) {
               modelViewerRef.current.reveal = 'auto';
-              setIsModelLoaded(true); // Ensure state is updated
+              setIsModelLoaded(true);
             }
           }}
         />
-        {/* Zoom controls removed: preview is passive and only auto-rotates until Interact is clicked */}
         <div className="preview-overlay">
           {!isModelLoaded && (
             <div className="rotation-indicator">
@@ -556,15 +551,39 @@ const ModelCard = ({ model, onInteract, animationDelay = 0 }) => {
             </div>
           )}
         </div>
+        {/* Interact button restored below the preview */}
+        <button
+          className="interact-btn"
+          onClick={handleInteractClick}
+          style={{
+            position: 'absolute',
+            left: '50%',
+            bottom: '16px',
+            transform: 'translateX(-50%)',
+            zIndex: 2,
+            padding: '10px 28px',
+            fontSize: '1.1rem',
+            borderRadius: '24px',
+            background: '#1e2a3a',
+            color: '#fff',
+            border: 'none',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.18)',
+            cursor: 'pointer',
+            opacity: isModelLoaded ? 1 : 0.5,
+            pointerEvents: isModelLoaded ? 'auto' : 'none',
+            transition: 'opacity 0.2s'
+          }}
+          disabled={!isModelLoaded}
+        >
+          Interact
+        </button>
       </div>
-
       <div className="card-content">
         <h3 className="model-title">{model.id}</h3>
         <div className="model-info">
           <span className="file-size">{formatFileSize(model.size)}</span>
           <span className="file-type">GLB</span>
         </div>
-        
       </div>
     </div>
   );
