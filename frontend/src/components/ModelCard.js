@@ -215,38 +215,19 @@ const ModelCard = ({ model, onInteract, animationDelay = 0 }) => {
       /android|iphone|ipad|ipod|mobile|opera mini|iemobile|wpdesktop/i.test(navigator.userAgent);
   };
 
-  // Keep preview non-interactive: disable gestures and zoom on the preview cards.
+  // Keep preview non-interactive: disable all AR and user input for the card preview.
   useEffect(() => {
-    // Determine small viewport (mobile) by width or touch capability
     const mv = modelViewerRef.current;
     if (!mv) return;
-    const isSmallViewport = window.innerWidth <= 768 || isTouchDevice;
-
-    // model-viewer uses presence of the 'disable-*' attributes, so to enable
-    // features we must REMOVE those attributes. For now enable camera
-    // controls and gestures for both mobile and desktop so single-finger drag
-    // and mouse dragging are available.
-    try {
-      mv.removeAttribute('disable-zoom');
-      mv.removeAttribute('disable-pan');
-      mv.removeAttribute('disable-tap');
-      mv.setAttribute('camera-controls', '');
-    } catch (e) {}
-    // Allow native model-viewer gestures by default but hint for pinch-zoom.
-    try { if (previewRef.current) previewRef.current.style.touchAction = 'pinch-zoom'; } catch(e){}
-    try { mv.style.touchAction = 'pinch-zoom'; } catch(e){}
-
-    // Aggressive performance flags for low-end devices (still applied)
-    if (isLowEndDevice() && mv) {
-      mv.setAttribute('ar', 'true');
-      mv.setAttribute('exposure', '0.7');
-      mv.setAttribute('shadow-intensity', '0.2');
-      mv.setAttribute('shadow-softness', '0.1');
-      mv.setAttribute('max-camera-orbit', 'auto auto 30%');
-      mv.setAttribute('quick-look', 'false');
-      mv.setAttribute('environment-image', '');
-      mv.setAttribute('render-scale', '0.5');
-    }
+    // Remove AR and camera-controls attributes for preview
+    mv.removeAttribute('ar');
+    mv.removeAttribute('ar-modes');
+    mv.removeAttribute('camera-controls');
+    mv.setAttribute('disable-zoom', '');
+    mv.setAttribute('disable-pan', '');
+    mv.setAttribute('disable-tap', '');
+    // Block all pointer events to prevent user input
+    mv.style.pointerEvents = 'none';
   }, [isTouchDevice]);
 
   
@@ -292,7 +273,7 @@ const ModelCard = ({ model, onInteract, animationDelay = 0 }) => {
           auto-rotate-delay="0"
           rotation-per-second="20deg"
           camera-orbit={previewOrbit}
-          draco-decoder-path={`${backendUrl}/draco/`}
+          /* AR, camera-controls, and user input are disabled in preview */
           interaction-prompt="none"
           interaction-prompt-threshold="0"
           environment-image=""
@@ -305,7 +286,6 @@ const ModelCard = ({ model, onInteract, animationDelay = 0 }) => {
             backgroundColor: 'transparent',
             transformStyle: 'preserve-3d'
           }}
-          // No AR, no camera-controls, no user input in preview
           onLoad={() => {
             if (modelViewerRef.current) {
               modelViewerRef.current.reveal = 'auto';
