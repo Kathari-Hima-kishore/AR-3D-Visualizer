@@ -140,7 +140,7 @@ function App() {
     <div className="App">
       <header className="app-header">
         <h1>AR Visualizer</h1>
-        <p>WebXR • WebGL</p>
+        <p>WebXR • WebGL • 3D Scene</p>
       </header>
 
       {!isInteracting ? (
