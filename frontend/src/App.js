@@ -139,8 +139,8 @@ function App() {
   return (
     <div className="App">
       <header className="app-header">
-        <h1>3D Model Viewer</h1>
-        <p>WebXR • WebGL • Interactive 3D Models</p>
+        <h1>AR Visualizer</h1>
+        <p>WebXR • WebGL</p>
       </header>
 
       {!isInteracting ? (
